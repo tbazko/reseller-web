@@ -26,13 +26,13 @@ export default class BuyDomainForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    fetch('http://localhost:5000/customers/create', {
+    fetch('http://localhost:5000/customers/register', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, cors, *same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       credentials: 'same-origin', // include, same-origin, *omit
       headers: {
-        'additionalInfo-Type': 'application/json; charset=utf-8',
+        'Content-Type': 'application/json; charset=utf-8',
         // "additionalInfo-Type": "application/x-www-form-urlencoded",
       },
       redirect: 'follow', // manual, *follow, error
