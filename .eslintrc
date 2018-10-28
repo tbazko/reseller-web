@@ -1,0 +1,128 @@
+{
+  "env": {
+    "jest": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "react/jsx-filename-extension": [
+      "off"
+    ],
+    "react/jsx-tag-spacing": [
+      "off"
+    ],
+    "react/jsx-closing-bracket-location": [
+      "off"
+    ],
+    "no-underscore-dangle": [
+      "off"
+    ],
+    "import/prefer-default-export": [
+      "off"
+    ],
+    "react/forbid-prop-types": [
+      "off"
+    ],
+    "global-require": [
+      "off"
+    ],
+    "no-use-before-define": [
+      "off"
+    ],
+    "class-methods-use-this": [
+      "off"
+    ],
+    "no-nested-ternary": [
+      "off"
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "^assets/.+png$"
+        ]
+      }
+    ],
+    "react/prop-types": [
+      "warn"
+    ],
+    "no-unused-vars": [
+      "warn"
+    ],
+    "consistent-return": [
+      "warn"
+    ],
+    "array-callback-return": [
+      "warn"
+    ],
+    "no-param-reassign": [
+      "warn"
+    ],
+    "react/jsx-no-bind": [
+      "warn"
+    ],
+    "import/no-extraneous-dependencies": [
+      "warn"
+    ],
+    "no-confusing-arrow": [
+      "warn"
+    ],
+    "no-shadow": [
+      "warn"
+    ],
+    "no-return-assign": [
+      "warn"
+    ],
+    "react/no-array-index-key": [
+      "off"
+    ],
+    "react/sort-comp": [
+      1,
+      {
+        "order": [
+          "static-methods",
+          "constructor",
+          "componentDidAppear",
+          "componentDidDisappear",
+          "lifecycle",
+          "everything-else",
+          "render"
+        ]
+      }
+    ],
+    "no-process-env": [
+      "error"
+    ],
+    "jsx-a11y/label-has-associated-control": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }],
+    "jsx-a11y/label-has-for": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }]
+  },
+  "parser": "babel-eslint",
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolver": {
+      "babel-module": {}
+    }
+  },
+  "globals": {
+    "window": true,
+    "fetch": true,
+    "shallow": true,
+    "awaitLifecycle": true,
+    "nextTick": true,
+    "initialState": true,
+    "mockDate": true,
+    "mockAxios": true,
+    "mockGet": true,
+    "mockPost": true,
+    "mockPatch": true,
+    "mockPut": true,
+    "mockDelete": true
+  }
+}

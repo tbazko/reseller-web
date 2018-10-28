@@ -1,0 +1,6 @@
+/node_modules/**
+/android/**
+/ios/**
+/__mocks__
+/coverage
+/storybook/storyLoader.js
