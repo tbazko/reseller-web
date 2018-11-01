@@ -1,0 +1,23 @@
+.header-menu {
+    background: #2396d5;
+}
+
+.header-menu li {
+    list-style-type: none;
+    display: inline-block;
+    line-height: 50px;
+    margin: 0px 20px;
+}
+
+.header-menu li a {
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    font-size:20px;
+    line-height: 24px;
+    color: gold;
+    font-weight: bold;    
+}
+
+.header-menu li a:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,33 @@
+.cabinet-menu {
+    background: #2396d5;   
+    width: 100%;
+    max-width: 250px;
+
+}
+
+.cabinet-menu .item {
+
+}
+
+.cabinet-menu .item .link {
+    font-size: 18px;
+    font-family: 'OpenSans';
+    text-transform: uppercase;
+    font-weight: regular;
+    color: white;
+}
+
+.sidebar {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+}
+
+.cabinet-data {
+    background: #ccc;
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+  
+    min-height: 550px;
+}
