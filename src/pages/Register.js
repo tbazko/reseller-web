@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Register.css';
 
 export default class BuyDomainForm extends Component {
+  static propTypes = {
+    userApi: PropTypes.shape({
+      register: PropTypes.func.isRequired,
+    }).isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -26,23 +33,14 @@ export default class BuyDomainForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    fetch('http://localhost:5000/customers/register', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, cors, *same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, same-origin, *omit
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        // "additionalInfo-Type": "application/x-www-form-urlencoded",
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrer: 'no-referrer', // no-referrer, *client
-      body: JSON.stringify(this.state), // body data type must match "additionalInfo-Type" header
-    });
+    this.props.userApi.register(this.state)
+      .catch(err => console.log);
   }
 
   handleChange = (event) => {
-    const { id, type, value, checked } = event.target;
+    const {
+      id, type, value, checked,
+    } = event.target;
     this.setState({ [id]: type === 'checkbox' ? checked : value });
   }
 
@@ -69,7 +67,7 @@ export default class BuyDomainForm extends Component {
         <p>
           согласно GDPR еще надо делать поле айпи адресс
         </p>
-        <form className="form" onSubmit={this.handleSubmit}>          
+        <form className="form" onSubmit={this.handleSubmit}>
           <div className="row">
             <fieldset className="active">
               <label htmlFor="name">Імя :</label>
@@ -140,12 +138,12 @@ export default class BuyDomainForm extends Component {
               Шаг
               <label htmlFor="submit"> 1 </label>
               из 4
-              <br></br>
+              <br />
               <button name="submit" type="submit">
-                  Реєстрація
+                Реєстрація
               </button>
             </fieldset>
-          </div>   
+          </div>
         </form>
       </div>
     );
