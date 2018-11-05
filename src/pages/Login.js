@@ -43,9 +43,7 @@ export default class Login extends Component {
     const { email, password } = this.state;
     return (
       <div className="row">
-        <h2>
-          Login (user is logged:&nbsp;)
-        </h2>
+        <h2>Login</h2>
         <form className="form" onSubmit={this.handleSubmit}>
           <fieldset>
             <label htmlFor="email">Email</label>

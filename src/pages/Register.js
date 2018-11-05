@@ -4,9 +4,14 @@ import './Register.css';
 
 export default class BuyDomainForm extends Component {
   static propTypes = {
+    selectedDomain: PropTypes.string,
     userApi: PropTypes.shape({
       register: PropTypes.func.isRequired,
     }).isRequired,
+  }
+
+  static defaultProps = {
+    selectedDomain: '',
   }
 
   constructor(props) {
@@ -30,11 +35,21 @@ export default class BuyDomainForm extends Component {
     };
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.userApi.register(this.state)
+  handleSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const { userApi, selectedDomain } = this.props;
+
+    userApi
+      .register(this.state)
       .catch(err => console.log);
+
+    if (selectedDomain.length > 0) {
+      userApi
+        .saveUserDomain(selectedDomain)
+        .catch(err => console.log);
+    }
   }
 
   handleChange = (event) => {

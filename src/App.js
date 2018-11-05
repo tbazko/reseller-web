@@ -13,12 +13,20 @@ export const AuthenticationContext = React.createContext({
   setIsLoggedIn: () => { },
 });
 
+export const RegistrationContext = React.createContext({
+  selectedDomain: null,
+  setSelectedDomain: () => { },
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userIsLoggedIn: false,
       setIsLoggedIn: this.setIsLoggedIn, // eslint-disable-line
+
+      selectedDomain: null, // eslint-disable-line
+      setSelectedDomain: this.setSelectedDomain, // eslint-disable-line
     };
   }
 
@@ -28,31 +36,50 @@ class App extends Component {
     }));
   }
 
+  setSelectedDomain = (selectedDomain) => {
+    this.setState({ selectedDomain }); // eslint-disable-line
+  }
+
   render() {
     const { userIsLoggedIn } = this.state;
-    console.log(userIsLoggedIn);
+
     return (
       <Router>
         <div>
           <Header />
           <AuthenticationContext.Provider value={this.state}>
-            <Route exact path="/" component={Home} />
-            <Route
-              path="/register"
-              render={() => (<Register userApi={userApi} />)}
-            />
+            <RegistrationContext.Provider value={this.state}>
+              <RegistrationContext.Consumer>
+                {({ setSelectedDomain }) => (
+                  <Route
+                    exact
+                    path="/"
+                    render={props => (<Home {...props} onSubmit={setSelectedDomain} />)}
+                  />
+                )}
+              </RegistrationContext.Consumer>
+
+              <RegistrationContext.Consumer>
+                {({ selectedDomain }) => (
+                  <Route
+                    path="/register"
+                    render={() => (<Register userApi={userApi} selectedDomain={selectedDomain} />)}
+                  />
+                )}
+              </RegistrationContext.Consumer>
+            </RegistrationContext.Provider>
             <Route
               path="/login"
               render={() => (
                 userIsLoggedIn ? (
                   <Redirect to="/dashboard" />
                 ) : (
-                  <AuthenticationContext.Consumer>
-                    {({ setIsLoggedIn }) => (
-                      <Login onLogin={setIsLoggedIn} userApi={userApi} />
-                    )}
-                  </AuthenticationContext.Consumer>
-                )
+                    <AuthenticationContext.Consumer>
+                      {({ setIsLoggedIn }) => (
+                        <Login onLogin={setIsLoggedIn} userApi={userApi} />
+                      )}
+                    </AuthenticationContext.Consumer>
+                  )
               )} />
             <Route
               path="/dashboard"

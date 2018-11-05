@@ -29,3 +29,19 @@ export function register(userData) {
     throw Error(response.statusText);
   });
 }
+
+export function saveUserDomain(domain) {
+  return fetch('/customers/domain', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify(domain),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+
+    throw Error(response.statusText);
+  });
+}
