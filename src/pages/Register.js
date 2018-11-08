@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Register.css';
 
-export default class BuyDomainForm extends Component {
+export default class Register extends Component {
   static propTypes = {
     selectedDomain: PropTypes.string,
     userApi: PropTypes.shape({
@@ -43,13 +43,14 @@ export default class BuyDomainForm extends Component {
 
     userApi
       .register(this.state)
+      .then(() => {
+        if (selectedDomain && selectedDomain.length > 0) {
+          userApi
+            .saveUserDomain(this.state.email, selectedDomain)
+            .catch(err => console.log);
+        }
+      })
       .catch(err => console.log);
-
-    if (selectedDomain.length > 0) {
-      userApi
-        .saveUserDomain(selectedDomain)
-        .catch(err => console.log);
-    }
   }
 
   handleChange = (event) => {

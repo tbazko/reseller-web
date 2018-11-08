@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import CabinetArea from './pages/CabinetArea';
 import * as userApi from './api/user';
+import * as domainsApi from './api/domains';
 
 export const AuthenticationContext = React.createContext({
   userIsLoggedIn: false,
@@ -54,7 +55,7 @@ class App extends Component {
                   <Route
                     exact
                     path="/"
-                    render={props => (<Home {...props} onSubmit={setSelectedDomain} />)}
+                    render={props => (<Home {...props} domainsApi={domainsApi} onSubmit={setSelectedDomain} />)}
                   />
                 )}
               </RegistrationContext.Consumer>
@@ -74,12 +75,12 @@ class App extends Component {
                 userIsLoggedIn ? (
                   <Redirect to="/dashboard" />
                 ) : (
-                    <AuthenticationContext.Consumer>
-                      {({ setIsLoggedIn }) => (
-                        <Login onLogin={setIsLoggedIn} userApi={userApi} />
-                      )}
-                    </AuthenticationContext.Consumer>
-                  )
+                  <AuthenticationContext.Consumer>
+                    {({ setIsLoggedIn }) => (
+                      <Login onLogin={setIsLoggedIn} userApi={userApi} />
+                    )}
+                  </AuthenticationContext.Consumer>
+                )
               )} />
             <Route
               path="/dashboard"
