@@ -17,6 +17,19 @@ export default class SelectDomainForm extends Component {
   }
 
   componentDidUpdate() {
+    this.updateDomainAvailabilityStatus();
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const selectedDomain = document.querySelector('input[name="requestedDomain"]:checked').value;
+    this.props.onSubmit(selectedDomain);
+    this.props.history.push('/register');
+  }
+
+  updateDomainAvailabilityStatus() {
     const domainLabels = Array.from(document.getElementsByClassName('requestedDomain'));
     domainLabels.forEach((element) => {
       if (!this.props.availableDomains) return;
@@ -28,15 +41,6 @@ export default class SelectDomainForm extends Component {
         element.nextElementSibling.disabled = true;
       }
     });
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const selectedDomain = document.querySelector('input[name="requestedDomain"]:checked').value;
-    this.props.onSubmit(selectedDomain);
-    this.props.history.push('/register');
   }
 
   render() {
