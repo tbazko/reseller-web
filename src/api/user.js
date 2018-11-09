@@ -1,9 +1,13 @@
+const postOptions = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 export function login({ email, password }) {
   return fetch(`${process.env.REACT_APP_API_URL}/customers/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    ...postOptions,
     body: JSON.stringify({ email, password }),
   }).then((response) => {
     if (!response.ok) throw Error(response.statusText);
@@ -13,10 +17,7 @@ export function login({ email, password }) {
 
 export function register(userData) {
   return fetch(`${process.env.REACT_APP_API_URL}/customers/register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-    },
+    ...postOptions,
     body: JSON.stringify(userData),
   }).then((response) => {
     if (!response.ok) throw Error(response.statusText);
@@ -25,10 +26,7 @@ export function register(userData) {
 
 export function saveUserDomain(email, domain) {
   return fetch(`${process.env.REACT_APP_API_URL}/customers/domain`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-    },
+    ...postOptions,
     body: JSON.stringify({ email, domain }),
   }).then((response) => {
     if (!response.ok) throw Error(response.statusText);
