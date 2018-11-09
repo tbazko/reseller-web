@@ -1,6 +1,6 @@
 export function getAvailable(domainsArr) {
   const domainsStr = domainsArr.toString();
-  return fetch(`/domains/available?domains=${domainsStr}`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/domains/available?domains=${domainsStr}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

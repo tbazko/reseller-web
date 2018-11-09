@@ -1,5 +1,5 @@
 export function login({ email, password }) {
-  return fetch('/customers/login', {
+  return fetch(`${process.env.REACT_APP_API_URL}/customers/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -12,7 +12,7 @@ export function login({ email, password }) {
 }
 
 export function register(userData) {
-  return fetch('/customers/register', {
+  return fetch(`${process.env.REACT_APP_API_URL}/customers/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -24,7 +24,7 @@ export function register(userData) {
 }
 
 export function saveUserDomain(email, domain) {
-  return fetch('/customers/domain', {
+  return fetch(`${process.env.REACT_APP_API_URL}/customers/domain`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
