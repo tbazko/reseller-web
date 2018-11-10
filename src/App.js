@@ -5,14 +5,10 @@ import {
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import CabinetArea from './pages/CabinetArea';
+import Cabinet from './pages/Cabinet';
 import * as userApi from './api/user';
 import * as domainsApi from './api/domains';
-
-export const AuthenticationContext = React.createContext({
-  userIsLoggedIn: false,
-  setIsLoggedIn: () => { },
-});
+import authenticator from './services/authenticator';
 
 export const RegistrationContext = React.createContext({
   selectedDomain: null,
@@ -29,11 +25,12 @@ class App extends Component {
       selectedDomain: null, // eslint-disable-line
       setSelectedDomain: this.setSelectedDomain, // eslint-disable-line
     };
+    this.authenticator = authenticator(userApi, this.setIsLoggedIn);
   }
 
-  setIsLoggedIn = () => {
+  setIsLoggedIn = (isLoggedIn) => {
     this.setState(state => ({
-      userIsLoggedIn: state.userIsLoggedIn === false,
+      userIsLoggedIn: typeof isLoggedIn === 'undefined' ? state.userIsLoggedIn === false : isLoggedIn,
     }));
   }
 
@@ -41,53 +38,59 @@ class App extends Component {
     this.setState({ selectedDomain }); // eslint-disable-line
   }
 
-  render() {
-    const { userIsLoggedIn } = this.state;
+  renderLoginOrRedirectToCabinet = () => {
+    const { login, loginIfRememberedUser } = this.authenticator;
 
+    if (this.state.userIsLoggedIn) {
+      return (<Redirect to="/cabinet" />);
+    }
+
+    return (
+      <Login
+        onLogin={login}
+        onCheckRememberedUser={loginIfRememberedUser}
+      />
+    );
+  }
+
+  renderCabinetOrRedirectToLogin = () => {
+    if (this.state.userIsLoggedIn) {
+      return (<Cabinet onLogout={this.authenticator.logout} />);
+    }
+
+    return (<Redirect to="/login" />);
+  }
+
+
+  render() {
     return (
       <Router>
         <div>
           <Header />
-          <AuthenticationContext.Provider value={this.state}>
-            <RegistrationContext.Provider value={this.state}>
-              <RegistrationContext.Consumer>
-                {({ setSelectedDomain }) => (
-                  <Route
-                    exact
-                    path="/"
-                    render={props => (<Home {...props} domainsApi={domainsApi} onSubmit={setSelectedDomain} />)}
-                  />
-                )}
-              </RegistrationContext.Consumer>
+          <RegistrationContext.Provider value={this.state}>
+            <RegistrationContext.Consumer>
+              {({ setSelectedDomain }) => (
+                <Route
+                  exact
+                  path="/"
+                  render={props => (
+                    <Home {...props} domainsApi={domainsApi} onSubmit={setSelectedDomain} />
+                  )}
+                />
+              )}
+            </RegistrationContext.Consumer>
 
-              <RegistrationContext.Consumer>
-                {({ selectedDomain }) => (
-                  <Route
-                    path="/register"
-                    render={() => (<Register userApi={userApi} selectedDomain={selectedDomain} />)}
-                  />
-                )}
-              </RegistrationContext.Consumer>
-            </RegistrationContext.Provider>
-            <Route
-              path="/login"
-              render={() => (
-                userIsLoggedIn ? (
-                  <Redirect to="/dashboard" />
-                ) : (
-                  <AuthenticationContext.Consumer>
-                    {({ setIsLoggedIn }) => (
-                      <Login onLogin={setIsLoggedIn} userApi={userApi} />
-                    )}
-                  </AuthenticationContext.Consumer>
-                )
-              )} />
-            <Route
-              path="/dashboard"
-              render={() => (
-                userIsLoggedIn ? <CabinetArea /> : <Redirect to="/login" />
-              )} />
-          </AuthenticationContext.Provider>
+            <RegistrationContext.Consumer>
+              {({ selectedDomain }) => (
+                <Route
+                  path="/register"
+                  render={() => (<Register userApi={userApi} selectedDomain={selectedDomain} />)}
+                />
+              )}
+            </RegistrationContext.Consumer>
+          </RegistrationContext.Provider>
+          <Route path="/login" render={this.renderLoginOrRedirectToCabinet} />
+          <Route path="/cabinet" render={this.renderCabinetOrRedirectToLogin} />
         </div>
       </Router>
     );
@@ -100,7 +103,7 @@ const Header = () => (
       <Link to="/">Home</Link>
     </li>
     <li>
-      <Link to="/dashboard">Dashboard</Link>
+      <Link to="/cabinet">Dashboard</Link>
     </li>
     <li>
       <Link to="/register">Buy domain</Link>

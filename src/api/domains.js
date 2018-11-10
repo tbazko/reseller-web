@@ -1,6 +1,8 @@
+const baseUrl = process.env.REACT_APP_API_URL || '';
+
 export function getAvailable(domainsArr) {
   const domainsStr = domainsArr.toString();
-  return fetch(`${process.env.REACT_APP_API_URL}/domains/available?domains=${domainsStr}`, {
+  return fetch(`${baseUrl}/domains/available?domains=${domainsStr}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -9,4 +11,4 @@ export function getAvailable(domainsArr) {
     if (!response.ok) throw Error(response.statusText);
     return response.json();
   });
-};
+}

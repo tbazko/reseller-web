@@ -1,5 +1,5 @@
 .cabinet-menu {
-    background: #2396d5;   
+    background: #2396d5;
     width: 100%;
     max-width: 250px;
 
@@ -10,6 +10,11 @@
 }
 
 .cabinet-menu .item .link {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
     font-size: 18px;
     font-family: 'OpenSans';
     text-transform: uppercase;
@@ -28,6 +33,6 @@
     width: 50%;
     display: inline-block;
     vertical-align: top;
-  
+
     min-height: 550px;
 }

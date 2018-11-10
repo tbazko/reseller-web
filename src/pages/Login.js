@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 export default class Login extends Component {
   static propTypes = {
     onLogin: PropTypes.func.isRequired,
-    userApi: PropTypes.shape({
-      login: PropTypes.func.isRequired,
-    }).isRequired,
+    onCheckRememberedUser: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -19,8 +17,7 @@ export default class Login extends Component {
   }
 
   async componentWillMount() {
-    const userId = await localStorage.getItem('reseller_uid');
-    if (userId) this.props.onLogin();
+    this.props.onCheckRememberedUser();
   }
 
   handleChange = (event) => {
@@ -32,11 +29,7 @@ export default class Login extends Component {
     event.preventDefault();
     event.stopPropagation();
 
-    const { userApi, onLogin } = this.props;
-    userApi.login(this.state)
-      .then(user => localStorage.setItem('reseller_uid', user.id))
-      .then(() => onLogin())
-      .catch(err => console.log);
+    this.props.onLogin(this.state);
   }
 
   render() {
