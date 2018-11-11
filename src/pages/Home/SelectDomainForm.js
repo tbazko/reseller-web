@@ -6,7 +6,7 @@ export default class SelectDomainForm extends Component {
   static propTypes = {
     domains: PropTypes.arrayOf(PropTypes.string).isRequired,
     availableDomains: PropTypes.arrayOf(PropTypes.string),
-    onSubmit: PropTypes.func.isRequired,
+    onDomainSelected: PropTypes.func.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -25,7 +25,7 @@ export default class SelectDomainForm extends Component {
     event.stopPropagation();
 
     const selectedDomain = document.querySelector('input[name="requestedDomain"]:checked').value;
-    this.props.onSubmit(selectedDomain);
+    this.props.onDomainSelected(selectedDomain);
     this.props.history.push('/register');
   }
 

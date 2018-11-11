@@ -55,7 +55,9 @@ class App extends Component {
 
   renderCabinetOrRedirectToLogin = () => {
     if (this.state.userIsLoggedIn) {
-      return (<Cabinet onLogout={this.authenticator.logout} />);
+      return (
+        <Cabinet onLogout={this.authenticator.logout} getUserSelf={userApi.getSelf} />
+      );
     }
 
     return (<Redirect to="/login" />);
@@ -74,7 +76,7 @@ class App extends Component {
                   exact
                   path="/"
                   render={props => (
-                    <Home {...props} domainsApi={domainsApi} onSubmit={setSelectedDomain} />
+                    <Home {...props} domainsApi={domainsApi} onDomainSelected={setSelectedDomain} />
                   )}
                 />
               )}

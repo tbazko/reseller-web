@@ -24,21 +24,15 @@ class Authenticator {
 
   login = ({ email, password }) => {
     this.establishApiSession({ email, password })
-      .then(this._rememberUser)
       .then(this.setIsLoggedInState)
       .catch(err => console.log);
   }
-
-  _rememberUser = user => localStorage.setItem('reseller_uid', user.id);
 
   logout = () => {
     this.destroyApiSession()
-      .then(this._forgetUser)
       .then(this.setIsLoggedInState)
       .catch(err => console.log);
   }
-
-  _forgetUser = () => localStorage.removeItem('reseller_uid');
 
   loginIfRememberedUser = async () => {
     this.hasValidSession()
