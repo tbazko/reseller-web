@@ -1,9 +1,20 @@
-const baseUrl = process.env.REACT_APP_API_URL || '';
+const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const postOptions = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
+  credentials: 'include',
+};
+
+const getOptions = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+  credentials: 'include',
 };
 
 export function establishSession({ email, password }) {
@@ -26,10 +37,7 @@ export function destroySession() {
 
 export function hasValidSession() {
   return fetch(`${baseUrl}/customers/is-authenticated`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    ...getOptions
   }).then((response) => {
     if (!response.ok) throw Error(response.statusText);
     return response.json();
@@ -56,11 +64,9 @@ export function saveUserDomain(email, domain) {
 
 export function getSelf() {
   return fetch(`${baseUrl}/customers/self`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    ...getOptions,
   }).then((response) => {
+    console.log(response);
     if (!response.ok) throw Error(response.statusText);
     return response.json();
   });
