@@ -8,6 +8,7 @@ export default class Register extends Component {
     userApi: PropTypes.shape({
       register: PropTypes.func.isRequired,
     }).isRequired,
+    onRegisterSuccess: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -45,11 +46,13 @@ export default class Register extends Component {
       .register(this.state)
       .then(() => {
         if (selectedDomain && selectedDomain.length > 0) {
-          userApi
+          return userApi
             .saveUserDomain(this.state.email, selectedDomain)
             .catch(err => console.log);
         }
+        return Promise.resolve();
       })
+      .then(() => this.props.onRegisterSuccess(this.state))
       .catch(err => console.log);
   }
 

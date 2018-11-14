@@ -22,21 +22,21 @@ class Authenticator {
     this.setIsLoggedInState = setIsLoggedInState;
   }
 
-  login = ({ email, password }) => {
+  login = ({ email, password }) => (
     this.establishApiSession({ email, password })
       .then(this.setIsLoggedInState)
-      .catch(err => console.log);
-  }
+      .catch(err => console.log)
+  )
 
-  logout = () => {
+  logout = () => (
     this.destroyApiSession()
       .then(this.setIsLoggedInState)
-      .catch(err => console.log);
-  }
+      .catch(err => console.log)
+  )
 
-  loginIfRememberedUser = async () => {
+  loginIfRememberedUser = () => (
     this.hasValidSession()
       .then(({ isAuthenticated }) => this.setIsLoggedInState(isAuthenticated))
-      .catch(err => console.log);
-  }
+      .catch(err => console.log)
+  )
 }

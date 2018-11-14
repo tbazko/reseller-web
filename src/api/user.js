@@ -37,7 +37,7 @@ export function destroySession() {
 
 export function hasValidSession() {
   return fetch(`${baseUrl}/customers/is-authenticated`, {
-    ...getOptions
+    ...getOptions,
   }).then((response) => {
     if (!response.ok) throw Error(response.statusText);
     return response.json();
@@ -66,7 +66,6 @@ export function getSelf() {
   return fetch(`${baseUrl}/customers/self`, {
     ...getOptions,
   }).then((response) => {
-    console.log(response);
     if (!response.ok) throw Error(response.statusText);
     return response.json();
   });

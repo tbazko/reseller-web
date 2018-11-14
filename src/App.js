@@ -25,6 +25,7 @@ class App extends Component {
       selectedDomain: null, // eslint-disable-line
       setSelectedDomain: this.setSelectedDomain, // eslint-disable-line
     };
+
     this.authenticator = authenticator(userApi, this.setIsLoggedIn);
   }
 
@@ -86,7 +87,16 @@ class App extends Component {
               {({ selectedDomain }) => (
                 <Route
                   path="/register"
-                  render={() => (<Register userApi={userApi} selectedDomain={selectedDomain} />)}
+                  render={props => (
+                    <Register
+                      userApi={userApi}
+                      onRegisterSuccess={credentials => (
+                        this.authenticator
+                          .login(credentials)
+                          .then(() => props.history.push('/cabinet'))
+                      )}
+                      selectedDomain={selectedDomain}
+                    />)}
                 />
               )}
             </RegistrationContext.Consumer>
